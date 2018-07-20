@@ -308,11 +308,14 @@ if __name__ == '__main__':
 
     for string in test_strings:
         x = 6
-        result = eval(string)
-        print('eval(%s) = %s' % (string, str(result)))
+        eval_result = eval(string)
+        print('eval(%s) = %s' % (string, str(eval_result)))
         x = symbol('x')
-        result = eval(string)
-        print('compute(%s, {x: %d}) = %s' % (string, 6, str(compute(result, {'x' : 6}))))
+        symb_eqn = eval(string)
+        symb_result = compute(symb_eqn, {'x' : 6})
+        print('compute(%s, {x: %d}) = %s' % (string, 6, str(symb_result)))
+        if eval_result != symb_result:
+            raise ValueError("eval results don't match symbolic compute results")
 
     @symbolic
     class PlusOne:
